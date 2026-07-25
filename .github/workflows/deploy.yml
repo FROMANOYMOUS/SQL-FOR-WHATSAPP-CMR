@@ -20,8 +20,10 @@ jobs:
         with:
           version: latest
 
-      # 3. Run all new SQL files against your database
+      # 3. Explicitly link your project and push migrations
       - name: Link and Deploy Migrations
-        run: supabase db push
+        run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase db push
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
