@@ -20,10 +20,11 @@ jobs:
         with:
           version: latest
 
-      # 3. Explicitly link your project and push migrations
+      # 3. Link project and push migrations using both credentials
       - name: Link and Deploy Migrations
         run: |
           supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
           supabase db push
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
