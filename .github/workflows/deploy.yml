@@ -1,0 +1,27 @@
+name: Deploy SQL Migrations to Supabase
+
+on:
+  push:
+    branches:
+      - main # Runs whenever you push code to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      -- 1. Download the code from your repository
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      -- 2. Install the Supabase interface tools
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      -- 3. Run all new SQL files against your database
+      - name: Link and Deploy Migrations
+        run: supabase db push
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
